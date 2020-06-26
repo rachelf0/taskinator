@@ -265,9 +265,9 @@ var dropTaskHandler = function (event) {
 
     dropZoneEl.removeAttribute("style");
     dropZoneEl.appendChild(draggableElement);
-    
-    for (var i=0; i < tasks.length; i++) {
-        if(tasks[i].id === parseInt(id)) {
+
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(id)) {
             tasks[i].status = statusSelectEl.value.toLowerCase();
         }
     }
@@ -282,9 +282,24 @@ var dragLeaveHandler = function (event) {
     }
 };
 
-var saveTasks = function() {
+var saveTasks = function () {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+
+var loadTasks = function() {
+    var savedtasks = localStorage.getItem("tasks");
+  
+    if (!savedTasks) {
+      return false;
+    }
+  
+    savedTasks = JSON.parse(savedTasks);
+
+    for (var i = 0; i < savedTasks.length; i++) {
+        //pass each task object into the 'createTaskEl()' fucntion
+        createTaskEl(savedTasks[i]);
+    }
+  }
 
 pageContentEl.addEventListener("click", taskButtonHandler);
 
